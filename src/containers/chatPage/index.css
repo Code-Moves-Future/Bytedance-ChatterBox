@@ -1,0 +1,50 @@
+/* 关键修复CSS */
+.chat-page {
+    margin-left: 200px;
+    width: calc(100% - 200px);
+    /* 新增 */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.chat-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 20px 120px;
+    /* 增大底部padding */
+}
+
+/* 修复滚动条遮挡 */
+.messages-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    /* 居中关键 */
+    padding-right: 15px;
+    /* 为滚动条留出空间 */
+}
+
+/* 输入框定位修复 */
+.message-input-wrapper {
+    position: fixed;
+    bottom: 0;
+    left: 550px;
+    right: 0;
+    background: linear-gradient(to top, rgba(255, 255, 255, 1) 80%, rgba(255, 255, 255, 0));
+    z-index: 1000;
+    padding: 20px 0;
+}
+
+/* 新增输入框容器约束 */
+.message-input-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+}
+
+/* 确保导航栏滚动条可见 */
+body {
+    overflow-x: visible !important;
+}
