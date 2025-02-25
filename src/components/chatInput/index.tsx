@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
 import { Input, Button } from 'antd';
 import { PaperClipOutlined, SendOutlined } from '@ant-design/icons';
-import './index.css'; 
+import './index.css';
+import { useOutletContext } from "react-router-dom";
 
 const { TextArea } = Input;
+
+// 新增上下文类型声明
+interface OutletContext {
+  addNewMessage: (content: string) => void;
+}
 
 interface ChatInputProps {
   onSend: (value: string) => void;
@@ -19,10 +25,13 @@ const ChatInput: React.FC<ChatInputProps> = ({
   maxLength = 5000,
 }) => {
   const [value, setValue] = useState('');
+  const { addNewMessage } = useOutletContext<OutletContext>();
 
   const handleSend = () => {
     if (value.trim()) {
       onSend(value);
+      // 添加空值检查
+      addNewMessage?.(value);  // 使用可选链操作符
       setValue('');
     }
   };

@@ -12,3 +12,27 @@ html {
   min-height: 100%;
   /* background-color: rgb(255, 255, 255); */
 }
+
+.menu-item {
+  display: flex;
+  flex-direction: row;  /* 改为横向布局 */
+  align-items: center;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* 新增标题容器样式 */
+.menu-item span {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 8px;
+}
+
+.timestamp {
+  font-size: 12px;  /* 调大字体 */
+  color: #666;
+  flex-shrink: 0;  /* 禁止时间缩小 */
+  min-width: 32px;  /* 保证时间完整显示 */
+}
