@@ -34,5 +34,5 @@ html {
   font-size: 12px;  /* 调大字体 */
   color: #666;
   flex-shrink: 0;  /* 禁止时间缩小 */
-  min-width: 65px;  /* 保证时间完整显示 */
+  min-width: 32px;  /* 保证时间完整显示 */
 }
