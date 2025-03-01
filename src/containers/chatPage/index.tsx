@@ -1,7 +1,8 @@
 // index.tsx
-import React from "react"
+import React, { useState } from "react"
 import { Card, Typography, Col, Row } from 'antd';
 import ChatInput from '../../components/chatInput/index';
+import { chatWithCoze } from '../../api';
 import './index.css';
 
 const { Paragraph } = Typography;
@@ -13,8 +14,26 @@ Hello! How can I assist you today? 😊
 `;
 
 const ChatPage: React.FC = () => {
-    const handleSend = (value: string) => {
-        console.log('发送消息:', value);
+    // 添加loading状态
+    const [isLoading, setIsLoading] = useState(false);
+
+    const handleSend = async (value: string) => {
+        try {
+            setIsLoading(true);
+            const messages = [
+                {
+                    role: 'user' as const,
+                    content: value
+                }
+            ];
+
+            const response = await chatWithCoze(messages, '7474165835762794506');
+            console.log('API响应:', response);
+        } catch (error) {
+            console.error('发送消息失败:', error);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const handleUpload = (file: File) => {
@@ -47,6 +66,7 @@ const ChatPage: React.FC = () => {
                         onSend={handleSend}
                         onUpload={handleUpload}
                         placeholder="Message ChatterBox"
+                        disabled={isLoading}
                     />
                 </div>
             </div>
