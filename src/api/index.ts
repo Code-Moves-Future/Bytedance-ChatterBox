@@ -18,9 +18,11 @@ export const chatWithCoze = async (
 ): Promise<CozeResponse> => {
     try {
         const response: AxiosResponse<CozeResponse> = await cozeApi.post('/chat', {
-            messages,
             bot_id: botId,
-            ...options,
+            query: messages[messages.length - 1].content,  // 使用最后一条消息作为查询
+            user: "user_1",  // 添加用户标识
+            stream: false,
+            ...options
         });
         return response.data;
     } catch (error) {

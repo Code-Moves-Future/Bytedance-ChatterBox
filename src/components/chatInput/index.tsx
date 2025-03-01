@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Input, Button } from 'antd';
 import { PaperClipOutlined, SendOutlined } from '@ant-design/icons';
-import './index.css'; 
+import './index.css';
 
 const { TextArea } = Input;
 
@@ -10,6 +10,7 @@ interface ChatInputProps {
   onUpload?: (file: File) => void;
   placeholder?: string;
   maxLength?: number;
+  disabled?: boolean;
 }
 
 const ChatInput: React.FC<ChatInputProps> = ({
@@ -17,11 +18,13 @@ const ChatInput: React.FC<ChatInputProps> = ({
   onUpload,
   placeholder = 'Message ChatterBox',
   maxLength = 5000,
+  disabled = false,
 }) => {
   const [value, setValue] = useState('');
 
   const handleSend = () => {
     if (value.trim()) {
+      console.log('ChatInput - 准备发送消息:', value);
       onSend(value);
       setValue('');
     }
@@ -52,6 +55,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
         autoSize={{ minRows: 1, maxRows: 12 }}
         className='custom-textarea'
         maxLength={maxLength}
+        disabled={disabled}
       />
 
       <div className='control-bar'>
@@ -79,7 +83,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
               icon={<SendOutlined />}
               onClick={handleSend}
               className="send-button"
-              disabled={!value.trim()}
+              disabled={!value.trim() || disabled}
             />
           </div>
         </div>
