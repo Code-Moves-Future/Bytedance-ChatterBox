@@ -2,20 +2,15 @@ import React, { useState } from 'react';
 import { Input, Button } from 'antd';
 import { PaperClipOutlined, SendOutlined } from '@ant-design/icons';
 import './index.css';
-import { useOutletContext } from "react-router-dom";
 
 const { TextArea } = Input;
-
-// 新增上下文类型声明
-interface OutletContext {
-  addNewMessage: (content: string) => void;
-}
 
 interface ChatInputProps {
   onSend: (value: string) => void;
   onUpload?: (file: File) => void;
   placeholder?: string;
   maxLength?: number;
+  disabled?: boolean;
 }
 
 const ChatInput: React.FC<ChatInputProps> = ({
@@ -23,15 +18,14 @@ const ChatInput: React.FC<ChatInputProps> = ({
   onUpload,
   placeholder = 'Message ChatterBox',
   maxLength = 5000,
+  disabled = false,
 }) => {
   const [value, setValue] = useState('');
-  const { addNewMessage } = useOutletContext<OutletContext>();
 
   const handleSend = () => {
     if (value.trim()) {
+      console.log('ChatInput - 准备发送消息:', value);
       onSend(value);
-      // 添加空值检查
-      addNewMessage?.(value);  // 使用可选链操作符
       setValue('');
     }
   };
@@ -61,6 +55,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
         autoSize={{ minRows: 1, maxRows: 12 }}
         className='custom-textarea'
         maxLength={maxLength}
+        disabled={disabled}
       />
 
       <div className='control-bar'>
@@ -88,7 +83,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
               icon={<SendOutlined />}
               onClick={handleSend}
               className="send-button"
-              disabled={!value.trim()}
+              disabled={!value.trim() || disabled}
             />
           </div>
         </div>
