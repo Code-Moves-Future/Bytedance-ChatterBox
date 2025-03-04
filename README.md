@@ -44,6 +44,7 @@
 │   ├── App.tsx                   # 根组件逻辑
 │   ├── main.tsx                  # 应用入口文件
 │   └── vite-env.d.ts             # Vite 环境变量类型定义
+├── .env                          # .env 环境变量文件
 └── index.html                    # 应用的 HTML 入口文件
 ```
 
