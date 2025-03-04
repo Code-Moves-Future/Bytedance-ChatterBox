@@ -1,13 +1,12 @@
 // index.tsx
 import React, { useState } from "react"
-import { Card, Typography, Col, Row } from 'antd';
+import { Typography, Col } from 'antd';
 import ChatInput from '../../components/chatInput/index';
 import { chatWithCoze } from '../../api';
 import './index.css';
+import MessageBubble from '../../components/messageBuble';
 
 const bot_id = import.meta.env.VITE_BOT_ID;
-
-const { Paragraph } = Typography;
 
 const blockContent = `Hello!`;
 
@@ -48,17 +47,17 @@ const ChatPage: React.FC = () => {
             <div className="chat-content">
                 <div className="messages-container">
                     <Col span={24}>
-                        {/* 原有消息结构保持不变 */}
-                        <Row justify="end" style={{ paddingBottom: 50 }}>
-                            <Card style={{ width: 600, backgroundColor: "WhiteSmoke" }}>
-                                <Paragraph>{blockContent}</Paragraph>
-                            </Card>
-                        </Row>
-                        <Row justify="center" style={{ paddingBottom: 50 }}>
-                            <Card style={{ width: 800 }}>
-                                <Typography.Text>{codeContent}</Typography.Text>
-                            </Card>
-                        </Row>
+                        {/* 用户消息示例 */}
+                        <MessageBubble
+                            content={blockContent}
+                            align="right"
+                        />
+                        {/* 机器人消息示例 */}
+                        <MessageBubble
+                            content={codeContent}
+                            align="center"
+                            isCode
+                        />
                     </Col>
                 </div>
             </div>
