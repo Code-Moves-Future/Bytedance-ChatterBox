@@ -5,6 +5,8 @@ import ChatInput from '../../components/chatInput/index';
 import { chatWithCoze } from '../../api';
 import './index.css';
 
+const bot_id = import.meta.env.VITE_BOT_ID;
+
 const { Paragraph } = Typography;
 
 const blockContent = `Hello!`;
@@ -27,7 +29,8 @@ const ChatPage: React.FC = () => {
                 }
             ];
 
-            const response = await chatWithCoze(messages, '7474165835762794506');
+            const response = await chatWithCoze(messages, bot_id);
+            // TODO: 结果渲染页面
             console.log('API响应:', response);
         } catch (error) {
             console.error('发送消息失败:', error);

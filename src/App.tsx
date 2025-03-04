@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Button, Layout, Menu, theme} from 'antd';
-import { MenuFoldOutlined, MenuUnfoldOutlined, PlusOutlined, MessageOutlined } from '@ant-design/icons';
+import { Button, Layout, Menu, theme } from 'antd';
+import { MenuFoldOutlined, MenuUnfoldOutlined, PlusOutlined, MessageOutlined, DeleteOutlined } from '@ant-design/icons';
 import './App.css';
 import { useNavigate, Outlet } from 'react-router-dom';
 import { Tooltip } from 'antd';
+
 
 // 时间格式化工具函数
 const formatTimestamp = (date: Date) => {
@@ -31,14 +32,20 @@ const siderStyle: React.CSSProperties = {
   bottom: 0,
   scrollbarWidth: 'thin',
   scrollbarGutter: 'stable',
+  backgroundColor: 'rgb(248, 248, 248)'
 };
+
+const siderMeanStyle: React.CSSProperties = {
+  backgroundColor: 'rgb(248, 248, 248)',
+  borderInlineEnd: '0px solid rgba(255, 255, 255, 0)'
+}
 
 const App: React.FC = () => {
   const Navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
 
   const {
-    token: { colorBgContainer, borderRadiusLG },
+    token: { colorBgContainer },
   } = theme.useToken();
 
   // 修改状态类型增加时间字段
@@ -60,10 +67,10 @@ const App: React.FC = () => {
     ]);
   };
 
-    // 新增删除处理方法
-    const handleDelete = (key: string) => {
-        setChatHistory(prev => prev.filter(item => item.key !== key));
-    };
+  // 新增删除处理方法
+  const handleDelete = (key: string) => {
+    setChatHistory(prev => prev.filter(item => item.key !== key));
+  };
 
   // 修改后的新建对话方法
   const createNewChat = () => {
@@ -75,7 +82,7 @@ const App: React.FC = () => {
     <>
       <Layout>
         {/** 侧边栏 */}
-        <Sider style={siderStyle} theme="light" width={270} trigger={null} collapsible collapsed={collapsed}>
+        <Sider style={siderStyle} width={270} trigger={null} collapsible collapsed={collapsed}>
           <div style={{ paddingTop: 20, paddingBottom: 20 }}>
             {collapsed ? (
               <>
@@ -92,80 +99,79 @@ const App: React.FC = () => {
             )}
           </div>
           <Menu
-              theme="light"
-              mode="inline"
-              items={chatHistory.map(item => ({
-                key: item.key,
-                icon: <MessageOutlined />,
-                label: (
-                    <Tooltip
-                        title={item.label.length > 24 ? item.label.slice(0, 24) + "..." : item.label}
-                        placement="top"
-                        mouseEnterDelay={0.5}
-                    >
-                    <div className="menu-item">
-                        <div className="timestamp">
-                            {formatTimestamp(item.timestamp)}
-                        </div>
-                        <div style={{
-                            display: 'flex',
-                            justifyContent: 'flex-end',
-                            alignItems: 'center',
-                            width: '100%',
-                        }}>
-                            <span style={{
-                                flex: 1,
-                                overflow: 'hidden',
-                                textOverflow: 'ellipsis',
-                                whiteSpace: 'nowrap',
-                                maxWidth: 'calc(100%)',
-                            }}>{item.label}</span>
-                            <Button
-                                type="text"
-                                size="small"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleDelete(item.key);
-                                }}
-                                style={{
-                                    flexShrink: 0,
-                                    textAlign: 'left',
-                                    fontSize: '15px',
-                                    color: 'red',
-                                    marginLeft: '0',
-                                    marginRight: '20px',
-                                }}
-                            >
-                                del
-                            </Button>
-                        </div>
+            style={siderMeanStyle}
+            mode="inline"
+            items={chatHistory.map(item => ({
+              key: item.key,
+              icon: <MessageOutlined />,
+              label: (
+                <Tooltip
+                  title={item.label.length > 24 ? item.label.slice(0, 24) + "..." : item.label}
+                  placement="top"
+                  mouseEnterDelay={0.5}
+                >
+                  <div className="menu-item">
+                    <div className="timestamp">
+                      {formatTimestamp(item.timestamp)}
                     </div>
-                    </Tooltip>
-                )
-              }))}
+                    <div style={{
+                      display: 'flex',
+                      justifyContent: 'flex-end',
+                      alignItems: 'center',
+                      width: '100%',
+                    }}>
+                      <span style={{
+                        flex: 1,
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap',
+                        maxWidth: 'calc(100%)',
+                      }}>{item.label}</span>
+                      <Button
+                        type="text"
+                        size="small"
+                        icon={<DeleteOutlined/>}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDelete(item.key);
+                        }}
+                        style={{
+                          flexShrink: 0,
+                          textAlign: 'left',
+                          fontSize: '15px',
+                          marginLeft: '0',
+                          marginRight: '20px',
+                        }}
+                      />
+      
+                    </div>
+                  </div>
+                </Tooltip>
+              )
+            }))}
           />
         </Sider>
-          <Layout>
-              {/** 顶部栏 */}
-              <Header style={{padding: 0, background: colorBgContainer}}>
-                  <Button
-                      type="text"
-                      icon={collapsed ? <MenuUnfoldOutlined/> : <MenuFoldOutlined/>}
-                      onClick={() => setCollapsed(!collapsed)}
-                      style={{
-                          fontSize: '16px',
-                          width: 64,
-                          height: 64,
-                      }}
-                  />
-              </Header>
-              {/** 内容 */}
-              <Content
-                  style={{
-                      padding: 24,
-                      minHeight: 280,
+        <Layout>
+          {/** 顶部栏 */}
+          <Header style={{ padding: 0, background: colorBgContainer }}>
+            <Button
+              type="text"
+              icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+              onClick={() => setCollapsed(!collapsed)}
+              style={{
+                fontSize: '16px',
+                width: 64,
+                height: 64,
+              }}
+            />
+          </Header>
+          {/** 内容 */}
+          <Content
+            style={{
+              // margin: '16px 12px',
+              paddingTop: 24,
+              minHeight: 280,
               background: colorBgContainer,
-              borderRadius: borderRadiusLG,
             }}
           >
             <Outlet context={{ addNewMessage }} />

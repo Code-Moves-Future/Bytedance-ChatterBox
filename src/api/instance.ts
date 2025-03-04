@@ -1,6 +1,8 @@
 import axios, { AxiosInstance, InternalAxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 import { COZE_CONFIG } from '../utils/env';
 
+const api_key = import.meta.env.VITE_API_KEY;
+
 // 创建axios实例
 const cozeApi: AxiosInstance = axios.create({
     baseURL: COZE_CONFIG.BASE_URL,
@@ -14,8 +16,8 @@ const cozeApi: AxiosInstance = axios.create({
 cozeApi.interceptors.request.use(
     (config: InternalAxiosRequestConfig) => {
         // 在请求头中添加 Authorization
-        if (COZE_CONFIG.API_KEY) {
-            config.headers.Authorization = `Bearer ${COZE_CONFIG.API_KEY}`;
+        if (api_key) {
+            config.headers.Authorization = `Bearer ${api_key}`;
         }
         return config;
     },

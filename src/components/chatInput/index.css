@@ -63,25 +63,26 @@
   
   .icon-button {
     cursor: pointer;
-    color: #8c8c8c;
+    color: #90909045;
     padding: 4px;
     transition: color 0.3s;
   }
   
   .icon-button:hover {
-    color: #4096ff;
+    color: #0000006e !important;
   }
   
   .send-button {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #4096ff;
+    background-color: #90909045;
     border: none;
     transition: all 0.3s;
   }
   
   .send-button:hover {
-    background-color: #0958d9;
+    color: #b9b9b9 !important;
+    background-color: #0000006e !important;
     transform: scale(1.05);
   }

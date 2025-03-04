@@ -13,6 +13,7 @@ html {
   /* background-color: rgb(255, 255, 255); */
 }
 
+
 .menu-item {
   display: flex;
   flex-direction: row;  /* 改为横向布局 */
@@ -28,6 +29,13 @@ html {
   overflow: hidden;
   text-overflow: ellipsis;
   padding-right: 8px;
+  
+}
+
+.ant-menu-item:active,
+.ant-menu-item-selected {
+  background-color: #90909045 !important; /* 自定义背景色 */
+  color: #000000 !important; /* 自定义文本颜色 */
 }
 
 .timestamp {

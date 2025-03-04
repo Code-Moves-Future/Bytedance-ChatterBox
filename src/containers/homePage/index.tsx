@@ -20,7 +20,7 @@ const HomePage: React.FC = () => {
 
 
   return (
-    <div className='chat-page'>
+    <div className='home-page'>
       <Col span={24}>
         <Row justify="center" style={{paddingBottom: 50}}>
           <Title level={1}>What can I help with?</Title>

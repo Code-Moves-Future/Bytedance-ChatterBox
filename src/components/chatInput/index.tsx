@@ -2,8 +2,13 @@ import React, { useState } from 'react';
 import { Input, Button } from 'antd';
 import { PaperClipOutlined, SendOutlined } from '@ant-design/icons';
 import './index.css';
+import { useOutletContext } from "react-router-dom";
 
 const { TextArea } = Input;
+
+interface OutletContext {
+  addNewMessage: (content: string) => void;
+}
 
 interface ChatInputProps {
   onSend: (value: string) => void;
@@ -21,11 +26,13 @@ const ChatInput: React.FC<ChatInputProps> = ({
   disabled = false,
 }) => {
   const [value, setValue] = useState('');
+  const { addNewMessage } = useOutletContext<OutletContext>();
 
   const handleSend = () => {
     if (value.trim()) {
       console.log('ChatInput - 准备发送消息:', value);
       onSend(value);
+      addNewMessage?.(value);  // 使用可选链操作符
       setValue('');
     }
   };
@@ -78,7 +85,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
               </label>
             )}
             <Button
-              type="primary"
+              type="default"
               shape="circle"
               icon={<SendOutlined />}
               onClick={handleSend}
